@@ -24,7 +24,7 @@ class Stack {
     takeout = () => {
 
         let counter = 0;
-        const content;
+        let content;
         let movement = [];
 
 
