@@ -1,11 +1,7 @@
-var stack = new Stack(5);
+function setup() {
+    createCanvas(1200, 700);
+}
 
-console.log(stack.push("Rojo"));
-console.log(stack.getArray());
-console.log(stack.push("Verde"));
-console.log(stack.getArray());
-console.log(stack.push("Amarillo"));
-console.log(stack.getArray());
-stack.pop();
-console.log(stack.getArray());
-console.log(stack.peek());
+function draw() {
+    background(0);
+}

@@ -12,8 +12,53 @@ class Stack {
     }
 
 
+    available = () => {
+        return this.capacity - this.count;
+    }
+
+
     size = () => {
         return this.count;
+    }
+
+    takeout = () => {
+
+        let counter = 0;
+        const content;
+        let movement = [];
+
+
+        let kill = false;
+
+        while (!kill) {
+
+            if (size() != 0) {
+
+                if (counter == 0) {
+                    content = this.stack.pop;
+                    counter++;
+                } else if (content === this.stack.peek) {
+                    this.stack.pop;
+                    counter++;
+                } else {
+                    kill = true;
+                }
+
+            } else {
+                kill = true;
+            }
+
+        }
+
+        if (counter == 0) {
+            return false;
+        } else {
+            movement.push(content);
+            movement.push(counter);
+        }
+
+        return movement;
+
     }
 
     push = (val) => {
