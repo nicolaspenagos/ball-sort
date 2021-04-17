@@ -13,6 +13,10 @@ class Game {
             []
         ];
         this.takeout;
+        this.currentTime;
+        this.intervalId;
+        this.finished = false;
+        this.movements = 0;
 
     }
 
@@ -34,5 +38,41 @@ class Game {
 
 
     }
+
+    starTime = () => {
+
+        this.currentTime = 120;
+
+        this.intervalId = setInterval(() => {
+
+            this.currentTime--;
+            if (this.currentTime == 0) {
+
+                this.finished = true;
+                clearInterval(this.intervalId);
+            }
+
+
+        }, 1000);
+
+    }
+
+    getTime = () => {
+
+        let min = Math.floor(this.currentTime / 60);
+        let seconds = this.currentTime % 60;
+
+        if (seconds > 9)
+            return "" + min + ":" + seconds;
+
+        return "" + min + ":0" + seconds;
+
+    }
+
+    addMove = () => {
+        this.movements++;
+    }
+
+
 
 }

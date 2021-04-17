@@ -27,6 +27,7 @@ function setup() {
     createCanvas(1280, 720);
     game = new Game();
     game.loadLevel(game.levelOneA);
+    game.starTime();
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
     gameToDraw = game.currentGame;
@@ -112,6 +113,18 @@ function draw() {
         }
     }
 
+
+    //Draw time
+    fill(255, 255, 255)
+    textSize(36);
+    text(game.getTime(), 140, 100);
+    text(game.movements, 140, 150);
+
+
+    if (game.finished) {
+        background('');
+    }
+
 }
 
 //Get color hexacode from string.
@@ -152,6 +165,8 @@ function mousePressed() {
         if (mouseY > y1 && mouseY < y2) {
             if (mouseX > x1 && mouseX < x2) {
 
+
+
                 if (!drawTakeOut) {
 
                     if (!game.currentBottlesState[counter - 1]) {
@@ -159,7 +174,7 @@ function mousePressed() {
                         game.currentBottlesState[counter - 1] = true;
                         game.takeout = game.currentGame[counter - 1].takeout(counter - 1);
                         drawTakeOut = true;
-                        console.log(game.currentBottlesState[counter - 1]);
+
                         return false;
 
                     } else {
@@ -168,6 +183,7 @@ function mousePressed() {
                             if (i != (counter - 1))
                                 game.currentBottlesState[i] = false;
                         }
+
                         return false;
 
                     }
@@ -177,6 +193,8 @@ function mousePressed() {
                     let bottleStack = game.currentGame[counter - 1];
                     if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
                         if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
+
+                            game.addMove();
 
                             counter = 0;
                             while (counter < game.takeout[1]) {
@@ -229,6 +247,8 @@ function mousePressed() {
     //Put back took out balls.
 
     if (drawTakeOut) {
+        game.addMove();
+
         let tookOutBalls = game.takeout;
         counter = 0;
         let stack = gameToDraw[tookOutBalls[2]];
@@ -242,7 +262,6 @@ function mousePressed() {
 
         drawTakeOut = false;
     }
-
 
     return false;
 }
