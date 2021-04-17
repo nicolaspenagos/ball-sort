@@ -175,7 +175,7 @@ function mousePressed() {
                 } else {
 
                     let bottleStack = game.currentGame[counter - 1];
-                    if ((bottleStack.size() - game.takeout[1]) >= 0 || bottleStack.size() == 0) {
+                    if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
                         if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
 
                             counter = 0;
