@@ -19,17 +19,46 @@ let takeout;
 let drawTakeOut;
 let backgroundColor;
 
+//-----------Will
+let screen;
+
+let menuBg;
+let musicOn;
+let musicOff;
+let playBtn;
+
+let inst1Bg;
+let inst1Cont;
+let inst2Bg;
+let backBtn;
+let inst3Bg;
+//-----------Will
+
+
 // -------------------------------------
 // FUNCTIONS
 // -------------------------------------
 function setup() {
 
     createCanvas(1280, 720);
+    screen=0;
     game = new Game();
     game.loadLevel(game.levelOneA);
     game.starTime();
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
+
+    //----------Will
+    menuBg=loadImage('images/menu-inst/menubg.png');
+    inst1Bg=loadImage('images/menu-inst/inst1bg.png');
+    inst2Bg=loadImage('images/menu-inst/inst2bg.png');
+    inst3Bg=loadImage('images/menu-inst/inst3bg.png');
+    musicOn=loadImage('images/ui/musicon.png');
+    musicOff=loadImage('images/ui/musicoff.png');
+    playBtn=loadImage('images/ui/platbtn.png');
+    inst1Cont=loadImage('images/ui/inst1cont.png');
+    backBtn=loadImage('images/ui/backbtn.png');
+    //----------Will
     gameToDraw = game.currentGame;
     columns = gameToDraw.length + 1;
     spacing = 1280 / columns;
@@ -40,90 +69,146 @@ function setup() {
 
 function draw() {
 
-    background(backgroundColor);
+    switch (screen) {
+        case 0:
+            image(menuBg,0,0);
+            image(musicOn,0,0);
+            image(musicOff,0,0);
+            image(playBtn,0,0);
 
-    fill(255, 255, 255);
 
-    // Draw the game.
-    gameToDraw = game.currentGame;
+            break;
 
-    //Draw bottles
-    for (let i = 0; i < game.currentBottlesState.length; i++) {
-        let x = spacing * (i + 1) - bottleAjustment;
+        case 1:
+            image(inst1Bg,0,0);
+            image(inst1Cont,0,0);
 
-        if (game.currentBottlesState[i])
-            image(pressedBottle, x, bottleLayoutPositionY);
-        else
-            image(bottle, x, bottleLayoutPositionY);
-
-        bottle.resize(bottleWidth, 0);
-        pressedBottle.resize(bottleWidth, 0);
+            break;
 
 
 
+        case 2:
+            image(inst2Bg,46,0);
+            image(inst1Cont,0,0);
+            image(backBtn,0,0);
+
+            break;
+
+
+
+        case 3:
+            image(inst3Bg,0,0);
+            image(inst1Cont,0,0);
+            image(backBtn,0,0);
+
+
+            break;
+
+
+        case 4:
+            background(0);
+
+
+            break;
+
+
+
+        case 6:
+            background(0);
+
+
+            break;
+
+
+        case 6:
+
+            background(backgroundColor);
+
+            fill(255, 255, 255);
+
+            // Draw the game.
+            gameToDraw = game.currentGame;
+
+            //Draw bottles
+            for (let i = 0; i < game.currentBottlesState.length; i++) {
+                let x = spacing * (i + 1) - bottleAjustment;
+
+                if (game.currentBottlesState[i])
+                    image(pressedBottle, x, bottleLayoutPositionY);
+                else
+                    image(bottle, x, bottleLayoutPositionY);
+
+                bottle.resize(bottleWidth, 0);
+                pressedBottle.resize(bottleWidth, 0);
+
+
+
+            }
+
+            //Draw the balls
+            for (let i = 0; i < gameToDraw.length; i++) {
+
+                let x = spacing * (i + 1);
+                let currentStack = gameToDraw[i];
+                let tempStack = new Stack();
+                let preStack = new Stack();
+                let postStack = new Stack();
+                let height = 1;
+
+                while (currentStack.size() > 0) {
+                    preStack.push(currentStack.pop());
+                }
+
+                while (preStack.size() > 0) {
+
+                    let currentBall = preStack.pop();
+                    fill(color(getColor(currentBall)));
+                    ellipse(x, 500 - (height * 20), 20, 20);
+                    height++;
+                    postStack.push(currentBall);
+                }
+
+                while (postStack.size() > 0) {
+                    tempStack.push(postStack.pop());
+                }
+
+                while (tempStack.size() > 0) {
+                    currentStack.push(tempStack.pop());
+                }
+
+            }
+
+            //Draw takeout balls
+            if (drawTakeOut) {
+
+
+                let fillColor = game.takeout[0];
+                let howMany = game.takeout[1];
+
+                console.log(color + " " + howMany);
+                let counter = 0;
+                while (counter < howMany) {
+
+                    fill(color(getColor(fillColor)));
+                    ellipse(spacing * (game.takeout[2] + 1), 280 - (counter * 20), 20, 20);
+                    counter++;
+                }
+            }
+
+
+            //Draw time
+            fill(255, 255, 255)
+            textSize(36);
+            text(game.getTime(), 140, 100);
+            text(game.movements, 140, 150);
+
+
+            if (game.finished) {
+                background('');
+            }
+            break;
     }
 
-    //Draw the balls
-    for (let i = 0; i < gameToDraw.length; i++) {
-
-        let x = spacing * (i + 1);
-        let currentStack = gameToDraw[i];
-        let tempStack = new Stack();
-        let preStack = new Stack();
-        let postStack = new Stack();
-        let height = 1;
-
-        while (currentStack.size() > 0) {
-            preStack.push(currentStack.pop());
-        }
-
-        while (preStack.size() > 0) {
-
-            let currentBall = preStack.pop();
-            fill(color(getColor(currentBall)));
-            ellipse(x, 500 - (height * 20), 20, 20);
-            height++;
-            postStack.push(currentBall);
-        }
-
-        while (postStack.size() > 0) {
-            tempStack.push(postStack.pop());
-        }
-
-        while (tempStack.size() > 0) {
-            currentStack.push(tempStack.pop());
-        }
-
-    }
-
-    //Draw takeout balls
-    if (drawTakeOut) {
-
-
-        let fillColor = game.takeout[0];
-        let howMany = game.takeout[1];
-
-        console.log(color + " " + howMany);
-        let counter = 0;
-        while (counter < howMany) {
-
-            fill(color(getColor(fillColor)));
-            ellipse(spacing * (game.takeout[2] + 1), 280 - (counter * 20), 20, 20);
-            counter++;
-        }
-    }
-
-
-    //Draw time
-    fill(255, 255, 255)
-    textSize(36);
-    text(game.getTime(), 140, 100);
-    text(game.movements, 140, 150);
-
-
-    if (game.finished) {
-        background('');
-    }
 
 }
 
@@ -150,9 +235,48 @@ function getColor(color) {
 
 }
 
-function mousePressed() {
+//-------Navegacion temporal Will
+function keyPressed(){
+    if(key=='d'){
+        screen++;
+    } else if(key=='a'){
+        screen--;
+    }
+}
+//-------Navegacion temporal Will
 
-    //Calculate bottles area.
+function mousePressed() {
+//-------Navegacion temporal con el mouse Will
+if(screen==0){
+    if ((mouseX > 555 && mouseX < 732) && (mouseY > 413 && mouseY < 473)) {
+        screen=1;
+    }
+}
+
+
+if(screen==1){
+    if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
+        screen=2;
+    }
+}
+
+if(screen==2){
+    if ((mouseX > 333 && mouseX < 558) && (mouseY > 493 && mouseY < 555)) {
+        screen=3;
+    }
+}
+
+if(screen==3){
+    if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
+        screen=4;
+    }
+}
+//-------Navegacion temporal con el mouse Will
+
+
+if(screen==6){
+
+  //Calculate bottles area.
     let counter = 1;
 
     while (counter <= columns - 1) {
@@ -211,7 +335,7 @@ function mousePressed() {
                             }
 
                             backgroundColor = 'green';
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 backgroundColor = 'black';
                             }, 100);
 
@@ -224,7 +348,7 @@ function mousePressed() {
 
 
                     backgroundColor = 'red';
-                    setTimeout(function() {
+                    setTimeout(function () {
                         backgroundColor = 'black';
                     }, 100);
 
@@ -265,3 +389,8 @@ function mousePressed() {
 
     return false;
 }
+
+}
+
+
+  
