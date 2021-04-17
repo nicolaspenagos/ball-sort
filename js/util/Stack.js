@@ -21,32 +21,37 @@ class Stack {
         return this.count;
     }
 
-    takeout = () => {
+    takeout = (index) => {
 
         let counter = 0;
         let content;
         let movement = [];
 
-
-        let kill = false;
+        var kill = false;
 
         while (!kill) {
 
-            if (size() != 0) {
+
+
+
+            if (this.count > 0) {
 
                 if (counter == 0) {
-                    content = this.stack.pop;
+                    content = this.pop();
                     counter++;
-                } else if (content === this.stack.peek) {
-                    this.stack.pop;
+
+                } else if (content === this.peek()) {
+                    this.pop();
                     counter++;
                 } else {
                     kill = true;
                 }
 
             } else {
+
                 kill = true;
             }
+
 
         }
 
@@ -55,6 +60,7 @@ class Stack {
         } else {
             movement.push(content);
             movement.push(counter);
+            movement.push(index);
         }
 
         return movement;
@@ -95,12 +101,11 @@ class Stack {
     }
 
     peek = () => {
-        console.log("Peek");
 
         if (this.count > 0) {
             return this.stack[this.count - 1];
         } else {
-            return 'The stack is empty';
+            return 'empty';
         }
     }
 
