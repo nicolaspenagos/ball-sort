@@ -50,6 +50,8 @@ class Game {
         this.intervalId;
         this.finished = false;
         this.movements = 0;
+        this.errors = 0;
+        this.currentLevel = level;
 
         switch (level) {
             case 1:
@@ -92,7 +94,7 @@ class Game {
 
     starTime = () => {
 
-        this.currentTime = 120;
+        this.currentTime = 240;
 
         this.intervalId = setInterval(() => {
 
@@ -122,6 +124,11 @@ class Game {
 
     addMove = () => {
         this.movements++;
+    }
+
+
+    addError = () => {
+        this.errors++;
     }
 
     gameSolved = () => {

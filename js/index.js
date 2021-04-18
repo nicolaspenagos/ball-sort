@@ -18,6 +18,10 @@ let game;
 let takeout;
 let drawTakeOut;
 let backgroundColor;
+let data = {};
+let currentLevel;
+let playing;
+
 
 //-----------Will
 let screen;
@@ -49,12 +53,15 @@ function preload() {
 }
 
 function startGame(level) {
+
     game = new Game(level);
     game.starTime();
     gameToDraw = game.currentGame;
     columns = gameToDraw.length + 1;
     spacing = 1280 / columns;
     backgroundColor = 'black';
+    drawTakeOut = false;
+    playing = true;
 }
 
 
@@ -68,6 +75,7 @@ function setup() {
     dakiti.setVolume(0.05);
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
+    currentLevel = 1;
 
     //----------Will
     menuBg = loadImage('images/menu-inst/menubg.png');
@@ -122,86 +130,108 @@ function draw() {
             }
             break;
         case 5:
-            background(backgroundColor);
-            fill(255, 255, 255);
-            // Draw the game.
-            gameToDraw = game.currentGame;
 
-            //Draw bottles
-            for (let i = 0; i < game.currentBottlesState.length; i++) {
-                let x = spacing * (i + 1) - bottleAjustment;
-
-                if (game.currentBottlesState[i])
-                    image(pressedBottle, x, bottleLayoutPositionY);
-                else
-                    image(bottle, x, bottleLayoutPositionY);
+            if (playing) {
+                background(backgroundColor);
+                fill(255, 255, 255);
+                // Draw the game.
+                gameToDraw = game.currentGame;
 
                 bottle.resize(bottleWidth, 0);
-                pressedBottle.resize(bottleWidth, 0);
+                //Draw bottles
+                for (let i = 0; i < game.currentBottlesState.length; i++) {
+                    let x = spacing * (i + 1) - bottleAjustment;
+
+                    if (game.currentBottlesState[i])
+                        image(pressedBottle, x, bottleLayoutPositionY);
+                    else
+                        image(bottle, x, bottleLayoutPositionY);
 
 
+                    pressedBottle.resize(bottleWidth, 0);
+
+
+
+                }
+
+                //Draw the balls
+                for (let i = 0; i < gameToDraw.length; i++) {
+
+                    let x = spacing * (i + 1);
+                    let currentStack = gameToDraw[i];
+                    let tempStack = new Stack();
+                    let preStack = new Stack();
+                    let postStack = new Stack();
+                    let height = 1;
+
+                    while (currentStack.size() > 0) {
+                        preStack.push(currentStack.pop());
+                    }
+
+                    while (preStack.size() > 0) {
+
+                        let currentBall = preStack.pop();
+                        fill(color(getColor(currentBall)));
+                        ellipse(x, 500 - (height * 20), 20, 20);
+                        height++;
+                        postStack.push(currentBall);
+                    }
+
+                    while (postStack.size() > 0) {
+                        tempStack.push(postStack.pop());
+                    }
+
+                    while (tempStack.size() > 0) {
+                        currentStack.push(tempStack.pop());
+                    }
+
+                }
+
+                //Draw takeout balls
+                if (drawTakeOut) {
+
+
+                    let fillColor = game.takeout[0];
+                    let howMany = game.takeout[1];
+                    let counter = 0;
+                    while (counter < howMany) {
+
+                        fill(color(getColor(fillColor)));
+                        ellipse(spacing * (game.takeout[2] + 1), 280 - (counter * 20), 20, 20);
+                        counter++;
+                    }
+                }
+
+
+                //Draw time
+                fill(255, 255, 255)
+                textSize(36);
+                text(game.getTime(), 140, 100);
+                text(game.movements, 140, 150);
+                text(game.errors, 140, 180);
+                text(currentLevel, 140, 50);
+
+
+                if (game.finished) {
+                    background('');
+                }
 
             }
 
-            //Draw the balls
-            for (let i = 0; i < gameToDraw.length; i++) {
+            break;
 
-                let x = spacing * (i + 1);
-                let currentStack = gameToDraw[i];
-                let tempStack = new Stack();
-                let preStack = new Stack();
-                let postStack = new Stack();
-                let height = 1;
-
-                while (currentStack.size() > 0) {
-                    preStack.push(currentStack.pop());
-                }
-
-                while (preStack.size() > 0) {
-
-                    let currentBall = preStack.pop();
-                    fill(color(getColor(currentBall)));
-                    ellipse(x, 500 - (height * 20), 20, 20);
-                    height++;
-                    postStack.push(currentBall);
-                }
-
-                while (postStack.size() > 0) {
-                    tempStack.push(postStack.pop());
-                }
-
-                while (tempStack.size() > 0) {
-                    currentStack.push(tempStack.pop());
-                }
-
-            }
-
-            //Draw takeout balls
-            if (drawTakeOut) {
-
-
-                let fillColor = game.takeout[0];
-                let howMany = game.takeout[1];
-                let counter = 0;
-                while (counter < howMany) {
-
-                    fill(color(getColor(fillColor)));
-                    ellipse(spacing * (game.takeout[2] + 1), 280 - (counter * 20), 20, 20);
-                    counter++;
-                }
-            }
-
-
-            //Draw time
+        case 6:
+            background('black');
             fill(255, 255, 255)
             textSize(36);
-            text(game.getTime(), 140, 100);
-            text(game.movements, 140, 150);
+            text('Level 2', 140, 100);
+            break;
 
-
-            if (game.finished) {
-                background('');
-            }
+        case 7:
+            background('black');
+            fill(255, 255, 255)
+            textSize(36);
+            text('Puntaje', 140, 100);
             break;
     }
 
@@ -335,6 +365,7 @@ function mousePressed() {
 
         case 5:
             //Calculate bottles area.
+
             let counter = 1;
 
             while (counter <= columns - 1) {
@@ -376,7 +407,7 @@ function mousePressed() {
                             if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
                                 if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
 
-                                    game.addMove();
+
 
                                     counter = 0;
                                     while (counter < game.takeout[1]) {
@@ -384,7 +415,34 @@ function mousePressed() {
                                         bottleStack.push(game.takeout[0]);
 
                                         if (game.gameSolved()) {
-                                            console.log("Terminado :) !!!!!!!!!!!!!!!!!");
+
+                                            playing = false;
+
+                                            let data = {
+                                                level: game.currentLevel,
+                                                movements: game.movements + 1,
+                                                errors: game.errors,
+                                                time: game.getTime()
+                                            }
+
+                                            if (currentLevel == 1) {
+                                                screen = 6;
+
+                                                setTimeout(() => {
+
+                                                    screen = 5;
+                                                    currentLevel = 2;
+                                                    startGame(3);
+
+                                                }, 3000);
+                                            } else if (currentLevel == 2) {
+                                                screen = 7;
+                                            }
+
+                                            return false;
+
+
+
                                         }
                                         counter++;
 
@@ -396,6 +454,7 @@ function mousePressed() {
                                         game.currentBottlesState[i] = false;
                                     }
 
+                                    game.addMove();
                                     backgroundColor = 'green';
                                     setTimeout(function() {
                                         backgroundColor = 'black';
@@ -409,6 +468,8 @@ function mousePressed() {
 
 
 
+
+                            game.addError();
                             backgroundColor = 'red';
                             setTimeout(function() {
                                 backgroundColor = 'black';
@@ -433,7 +494,6 @@ function mousePressed() {
             //Put back took out balls.
 
             if (drawTakeOut) {
-                game.addMove();
 
                 let tookOutBalls = game.takeout;
                 counter = 0;
