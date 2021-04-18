@@ -21,27 +21,42 @@ let backgroundColor;
 
 //-----------Will
 let screen;
+let uitour;
+let soundBtn;
+
+var dakiti;
 
 let menuBg;
 let musicOn;
-let musicOff;
-let playBtn;
 
 let inst1Bg;
-let inst1Cont;
 let inst2Bg;
-let backBtn;
 let inst3Bg;
+let inst4;
+let inst5;
+let inst6;
+let game1;
+let game2;
 //-----------Will
 
 
 // -------------------------------------
 // FUNCTIONS
 // -------------------------------------
+
+function preload() {
+    dakiti = loadSound("sound/dakiti.mp3");
+}
+
+
 function setup() {
 
     createCanvas(1280, 720);
-    screen=0;
+    screen = 0;
+    uitour = 0;
+    soundBtn = true;
+    dakiti.play();
+    dakiti.setVolume(0.05);
     game = new Game();
     game.loadLevel(game.levelOneA);
     game.starTime();
@@ -49,15 +64,17 @@ function setup() {
     pressedBottle = loadImage('images/pressed_bottle.png');
 
     //----------Will
-    menuBg=loadImage('images/menu-inst/menubg.png');
-    inst1Bg=loadImage('images/menu-inst/inst1bg.png');
-    inst2Bg=loadImage('images/menu-inst/inst2bg.png');
-    inst3Bg=loadImage('images/menu-inst/inst3bg.png');
-    musicOn=loadImage('images/ui/musicon.png');
-    musicOff=loadImage('images/ui/musicoff.png');
-    playBtn=loadImage('images/ui/platbtn.png');
-    inst1Cont=loadImage('images/ui/inst1cont.png');
-    backBtn=loadImage('images/ui/backbtn.png');
+    menuBg = loadImage('images/menu-inst/menubg.png');
+    inst1Bg = loadImage('images/menu-inst/inst1bg.png');
+    inst2Bg = loadImage('images/menu-inst/inst2bg.png');
+    inst3Bg = loadImage('images/menu-inst/inst3bg.png');
+    inst4 = loadImage('images/menu-inst/inst4.png');
+    inst5 = loadImage('images/menu-inst/inst5.png');
+    inst6 = loadImage('images/menu-inst/inst6.png');
+    game1 = loadImage('images/menu-inst/game1.png');
+    game2 = loadImage('images/menu-inst/game2.png');
+
+    musicOn = loadImage('images/ui/musicon.png');
     //----------Will
     gameToDraw = game.currentGame;
     columns = gameToDraw.length + 1;
@@ -71,61 +88,39 @@ function draw() {
 
     switch (screen) {
         case 0:
-            image(menuBg,0,0);
-            image(musicOn,0,0);
-            image(musicOff,0,0);
-            image(playBtn,0,0);
-
-
+            image(menuBg, 0, 0);
+            if (soundBtn == true) {
+                image(musicOn, 0, 0);   
+            }
+            
             break;
-
         case 1:
-            image(inst1Bg,0,0);
-            image(inst1Cont,0,0);
-
+            image(inst1Bg, 0, 0);
             break;
-
-
-
         case 2:
-            image(inst2Bg,46,0);
-            image(inst1Cont,0,0);
-            image(backBtn,0,0);
-
+            image(inst2Bg, 0, 0);
             break;
-
-
-
         case 3:
-            image(inst3Bg,0,0);
-            image(inst1Cont,0,0);
-            image(backBtn,0,0);
-
-
+            image(inst3Bg, 0, 0);
             break;
-
-
         case 4:
-            background(0);
+            switch (uitour) {
+                case 0:
+                    image(inst4, 0, 0);
+                    break;
 
+                case 1:
+                    image(inst5, 0, 0);
+                    break;
 
+                case 2:
+                    image(inst6, 0, 0);
+                    break;
+            }
             break;
-
-
-
-        case 6:
-            background(0);
-
-
-            break;
-
-
-        case 6:
-
+        case 5:
             background(backgroundColor);
-
             fill(255, 255, 255);
-
             // Draw the game.
             gameToDraw = game.currentGame;
 
@@ -212,6 +207,7 @@ function draw() {
 
 }
 
+
 //Get color hexacode from string.
 function getColor(color) {
 
@@ -236,161 +232,216 @@ function getColor(color) {
 }
 
 //-------Navegacion temporal Will
-function keyPressed(){
-    if(key=='d'){
+function keyPressed() {
+    if (key == 'd') {
         screen++;
-    } else if(key=='a'){
+    } else if (key == 'a') {
         screen--;
     }
 }
 //-------Navegacion temporal Will
 
+
+
 function mousePressed() {
-//-------Navegacion temporal con el mouse Will
-if(screen==0){
-    if ((mouseX > 555 && mouseX < 732) && (mouseY > 413 && mouseY < 473)) {
-        screen=1;
-    }
-}
 
+    //-------Navegacion temporal con el mouse Will
+    switch (screen) {
+        case 0:
+            if ((mouseX > 555 && mouseX < 732) && (mouseY > 413 && mouseY < 473)) {
+                screen = 1;
+            }
+            if ((mouseX > 1090 && mouseX < 1200) && (mouseY > 80 && mouseY < 173)) {
+                soundBtn = !soundBtn;
+                if(soundBtn==true){
+                    dakiti.play();
+                } else if(soundBtn==false){
+                    dakiti.stop();
+                }
+            }
 
-if(screen==1){
-    if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
-        screen=2;
-    }
-}
+            break;
 
-if(screen==2){
-    if ((mouseX > 333 && mouseX < 558) && (mouseY > 493 && mouseY < 555)) {
-        screen=3;
-    }
-}
+        case 1:
+            if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
 
-if(screen==3){
-    if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
-        screen=4;
-    }
-}
-//-------Navegacion temporal con el mouse Will
+                screen = 2;
+            }
+            break;
 
+        case 2:
+            if ((mouseX > 333 && mouseX < 558) && (mouseY > 493 && mouseY < 555)) {
+                screen = 3;
+            }
+            if ((mouseX > 80 && mouseX < 159) && (mouseY > 80 && mouseY < 143)) {
+                screen = 1;
+            }
+            break;
 
-if(screen==6){
+        case 3:
+            if ((mouseX > 287 && mouseX < 512) && (mouseY > 493 && mouseY < 555)) {
+                screen = 4;
+            }
+            if ((mouseX > 80 && mouseX < 159) && (mouseY > 80 && mouseY < 143)) {
+                screen = 2;
+            }
+            break;
 
-  //Calculate bottles area.
-    let counter = 1;
-
-    while (counter <= columns - 1) {
-
-        let x1 = spacing * (counter) - bottleAjustment;
-        let x2 = x1 + (2 * bottleAjustment);
-        let y1 = bottleLayoutPositionY;
-        let y2 = bottleLayoutPositionY + bottleHeight;
-
-        if (mouseY > y1 && mouseY < y2) {
-            if (mouseX > x1 && mouseX < x2) {
-
-
-
-                if (!drawTakeOut) {
-
-                    if (!game.currentBottlesState[counter - 1]) {
-
-                        game.currentBottlesState[counter - 1] = true;
-                        game.takeout = game.currentGame[counter - 1].takeout(counter - 1);
-                        drawTakeOut = true;
-
-                        return false;
-
-                    } else {
-
-                        for (let i = 0; i < game.currentBottlesState.length; i++) {
-                            if (i != (counter - 1))
-                                game.currentBottlesState[i] = false;
-                        }
-
-                        return false;
-
+        case 4:
+            switch (uitour) {
+                case 0:
+                    if ((mouseX > 80 && mouseX < 161) && (mouseY > 355 && mouseY < 418)) {
+                        screen = 3;
                     }
 
-                } else {
+                    if ((mouseX > 1120 && mouseX < 1200) && (mouseY > 350 && mouseY < 418)) {
+                        uitour = 1;
+                    }
+                    break;
 
-                    let bottleStack = game.currentGame[counter - 1];
-                    if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
-                        if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
+                case 1:
+                    if ((mouseX > 80 && mouseX < 161) && (mouseY > 355 && mouseY < 418)) {
+                        uitour = 0;
+                    }
 
-                            game.addMove();
+                    if ((mouseX > 1120 && mouseX < 1200) && (mouseY > 350 && mouseY < 418)) {
+                        uitour = 2;
+                    }
+                    break;
 
-                            counter = 0;
-                            while (counter < game.takeout[1]) {
+                case 2:
+                    if ((mouseX > 80 && mouseX < 161) && (mouseY > 355 && mouseY < 418)) {
+                        uitour = 1;
+                    }
+                    if ((mouseX > 975 && mouseX < 1200) && (mouseY > 578 && mouseY < 640)) {
+                        screen = 5;
+                    }
+                    break;
+            }
+            break;
 
-                                bottleStack.push(game.takeout[0]);
-                                counter++;
+        case 5:
+            //Calculate bottles area.
+            let counter = 1;
+
+            while (counter <= columns - 1) {
+
+                let x1 = spacing * (counter) - bottleAjustment;
+                let x2 = x1 + (2 * bottleAjustment);
+                let y1 = bottleLayoutPositionY;
+                let y2 = bottleLayoutPositionY + bottleHeight;
+
+                if (mouseY > y1 && mouseY < y2) {
+                    if (mouseX > x1 && mouseX < x2) {
+
+
+
+                        if (!drawTakeOut) {
+
+                            if (!game.currentBottlesState[counter - 1]) {
+
+                                game.currentBottlesState[counter - 1] = true;
+                                game.takeout = game.currentGame[counter - 1].takeout(counter - 1);
+                                drawTakeOut = true;
+
+                                return false;
+
+                            } else {
+
+                                for (let i = 0; i < game.currentBottlesState.length; i++) {
+                                    if (i != (counter - 1))
+                                        game.currentBottlesState[i] = false;
+                                }
+
+                                return false;
 
                             }
 
-                            drawTakeOut = false;
+                        } else {
 
-                            for (let i = 0; i < game.currentBottlesState.length; i++) {
-                                game.currentBottlesState[i] = false;
+                            let bottleStack = game.currentGame[counter - 1];
+                            if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
+                                if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
+
+                                    game.addMove();
+
+                                    counter = 0;
+                                    while (counter < game.takeout[1]) {
+
+                                        bottleStack.push(game.takeout[0]);
+                                        counter++;
+
+                                    }
+
+                                    drawTakeOut = false;
+
+                                    for (let i = 0; i < game.currentBottlesState.length; i++) {
+                                        game.currentBottlesState[i] = false;
+                                    }
+
+                                    backgroundColor = 'green';
+                                    setTimeout(function () {
+                                        backgroundColor = 'black';
+                                    }, 100);
+
+                                    return false;
+
+                                }
                             }
 
-                            backgroundColor = 'green';
+
+
+
+                            backgroundColor = 'red';
                             setTimeout(function () {
                                 backgroundColor = 'black';
                             }, 100);
 
                             return false;
-
                         }
+
+
+
                     }
-
-
-
-
-                    backgroundColor = 'red';
-                    setTimeout(function () {
-                        backgroundColor = 'black';
-                    }, 100);
-
-                    return false;
                 }
 
-
-
+                counter++;
             }
-        }
 
-        counter++;
+            //Pressed bottle.
+            for (let i = 0; i < game.currentBottlesState.length; i++) {
+                game.currentBottlesState[i] = false;
+            }
+
+            //Put back took out balls.
+
+            if (drawTakeOut) {
+                game.addMove();
+
+                let tookOutBalls = game.takeout;
+                counter = 0;
+                let stack = gameToDraw[tookOutBalls[2]];
+
+                while (counter < tookOutBalls[1]) {
+
+                    stack.push(tookOutBalls[0]);
+                    counter++;
+
+                }
+
+                drawTakeOut = false;
+            }
+
+            return false;
+
+            break;
     }
 
-    //Pressed bottle.
-    for (let i = 0; i < game.currentBottlesState.length; i++) {
-        game.currentBottlesState[i] = false;
-    }
-
-    //Put back took out balls.
-
-    if (drawTakeOut) {
-        game.addMove();
-
-        let tookOutBalls = game.takeout;
-        counter = 0;
-        let stack = gameToDraw[tookOutBalls[2]];
-
-        while (counter < tookOutBalls[1]) {
-
-            stack.push(tookOutBalls[0]);
-            counter++;
-
-        }
-
-        drawTakeOut = false;
-    }
-
-    return false;
 }
 
-}
 
 
-  
+
+
+
+
