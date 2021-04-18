@@ -48,6 +48,15 @@ function preload() {
     dakiti = loadSound("sound/dakiti.mp3");
 }
 
+function startGame(level) {
+    game = new Game(level);
+    game.starTime();
+    gameToDraw = game.currentGame;
+    columns = gameToDraw.length + 1;
+    spacing = 1280 / columns;
+    backgroundColor = 'black';
+}
+
 
 function setup() {
 
@@ -57,9 +66,6 @@ function setup() {
     soundBtn = true;
     dakiti.play();
     dakiti.setVolume(0.05);
-    game = new Game();
-    game.loadLevel(game.levelOneA);
-    game.starTime();
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
 
@@ -76,10 +82,7 @@ function setup() {
 
     musicOn = loadImage('images/ui/musicon.png');
     //----------Will
-    gameToDraw = game.currentGame;
-    columns = gameToDraw.length + 1;
-    spacing = 1280 / columns;
-    backgroundColor = 'black';
+
     frameRate(30);
 
 }
@@ -90,9 +93,9 @@ function draw() {
         case 0:
             image(menuBg, 0, 0);
             if (soundBtn == true) {
-                image(musicOn, 0, 0);   
+                image(musicOn, 0, 0);
             }
-            
+
             break;
         case 1:
             image(inst1Bg, 0, 0);
@@ -225,6 +228,16 @@ function getColor(color) {
         case 'red':
             colorToFill = '#ff0000';
             break;
+
+        case 'pink':
+            colorToFill = '#DD319F';
+            break;
+        case 'purple':
+            colorToFill = '#A531FF';
+            break;
+        case 'green':
+            colorToFill = '#16E49A'
+            break;
     }
 
     return colorToFill;
@@ -253,9 +266,9 @@ function mousePressed() {
             }
             if ((mouseX > 1090 && mouseX < 1200) && (mouseY > 80 && mouseY < 173)) {
                 soundBtn = !soundBtn;
-                if(soundBtn==true){
+                if (soundBtn == true) {
                     dakiti.play();
-                } else if(soundBtn==false){
+                } else if (soundBtn == false) {
                     dakiti.stop();
                 }
             }
@@ -315,6 +328,8 @@ function mousePressed() {
                     }
                     if ((mouseX > 975 && mouseX < 1200) && (mouseY > 578 && mouseY < 640)) {
                         screen = 5;
+                        //Comienzo juego
+                        startGame(4);
                     }
                     break;
             }
@@ -380,7 +395,7 @@ function mousePressed() {
                                     }
 
                                     backgroundColor = 'green';
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         backgroundColor = 'black';
                                     }, 100);
 
@@ -393,7 +408,7 @@ function mousePressed() {
 
 
                             backgroundColor = 'red';
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 backgroundColor = 'black';
                             }, 100);
 
@@ -438,10 +453,3 @@ function mousePressed() {
     }
 
 }
-
-
-
-
-
-
-

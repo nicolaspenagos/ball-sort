@@ -1,9 +1,7 @@
 class Game {
 
-    constructor() {
+    constructor(level) {
 
-        this.currentGame = [];
-        this.currentBottlesState = [];
         this.levelOneA = [
             [4],
             ['blue', 'red', 'yellow', 'blue'],
@@ -12,11 +10,64 @@ class Game {
             [],
             []
         ];
+
+        this.levelOneB = [
+            [4],
+            ['yellow', 'yellow', 'red', 'blue'],
+            ['red', 'blue', 'red', 'blue'],
+            ['yellow', 'red', 'blue', 'yellow'],
+            [],
+            [],
+        ];
+
+        this.levelTwoA = [
+            [4],
+            ['pink', 'purple', 'yellow', 'green'],
+            ['pink', 'purple', 'green', 'yellow'],
+            ['red', 'yellow', 'red', 'pink'],
+            ['purple', 'red', 'pink', 'yellow'],
+            ['purple', 'red', 'green', 'green'],
+            [],
+            [],
+        ];
+
+        this.levelTwoB = [
+            [4],
+            ['green', 'green', 'green', 'red'],
+            ['green', 'pink', 'red', 'yellow'],
+            ['yellow', 'red', 'yellow', 'pink'],
+            ['pink', 'yellow', 'pink', 'purple'],
+            ['red', 'purple', 'purple', 'purple'],
+            [],
+            [],
+        ];
+
+
+        this.currentGame = [];
+        this.currentBottlesState = [];
         this.takeout;
         this.currentTime;
         this.intervalId;
         this.finished = false;
         this.movements = 0;
+
+        switch (level) {
+            case 1:
+                this.loadLevel(this.levelOneA);
+                break;
+
+            case 2:
+                this.loadLevel(this.levelOneB);
+                break;
+
+            case 3:
+                this.loadLevel(this.levelTwoA);
+                break;
+
+            case 4:
+                this.loadLevel(this.levelTwoB);
+                break;
+        }
 
     }
 
@@ -72,7 +123,5 @@ class Game {
     addMove = () => {
         this.movements++;
     }
-
-
 
 }
