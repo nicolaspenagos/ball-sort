@@ -8,6 +8,7 @@ class Stack {
         this.capacity = capacity || Infinity;
         this.stack = {};
         this.count = 0;
+        this.solved = false;
 
     }
 
@@ -113,6 +114,34 @@ class Stack {
         return this.stack;
     }
 
+    stackSolved = () => {
 
+        if (this.count == 0) {
+            this.solved = true;
+            return;
+        }
+
+        if (this.count == this.capacity) {
+            let color = this.stack[0];
+
+            for (let i = 0; i < this.stack.lenght; i++) {
+
+                if (color === this.stack[i]) {
+
+                } else {
+                    this.solved = false;
+
+                }
+            }
+            this.solved = true;
+
+
+        } else {
+
+            this.solved = false;
+
+        }
+
+    }
 
 }

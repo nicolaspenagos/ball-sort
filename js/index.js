@@ -182,8 +182,6 @@ function draw() {
 
                 let fillColor = game.takeout[0];
                 let howMany = game.takeout[1];
-
-                console.log(color + " " + howMany);
                 let counter = 0;
                 while (counter < howMany) {
 
@@ -329,7 +327,7 @@ function mousePressed() {
                     if ((mouseX > 975 && mouseX < 1200) && (mouseY > 578 && mouseY < 640)) {
                         screen = 5;
                         //Comienzo juego
-                        startGame(4);
+                        startGame(1);
                     }
                     break;
             }
@@ -384,6 +382,10 @@ function mousePressed() {
                                     while (counter < game.takeout[1]) {
 
                                         bottleStack.push(game.takeout[0]);
+
+                                        if (game.gameSolved()) {
+                                            console.log("Terminado :) !!!!!!!!!!!!!!!!!");
+                                        }
                                         counter++;
 
                                     }

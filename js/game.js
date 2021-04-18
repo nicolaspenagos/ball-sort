@@ -124,4 +124,24 @@ class Game {
         this.movements++;
     }
 
+    gameSolved = () => {
+
+
+        for (let i = 0; i < this.currentGame.length; i++) {
+
+            this.currentGame[i].stackSolved();
+
+            if (!this.currentGame[i].solved) {
+
+
+                return false;
+            }
+
+
+
+        }
+
+        return true;
+    }
+
 }
