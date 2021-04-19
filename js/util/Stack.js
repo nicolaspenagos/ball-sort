@@ -6,7 +6,7 @@ class Stack {
     constructor(capacity) {
 
         this.capacity = capacity || Infinity;
-        this.stack = {};
+        this.stack = [];
         this.count = 0;
         this.solved = false;
 
@@ -116,30 +116,30 @@ class Stack {
 
     stackSolved = () => {
 
+
         if (this.count == 0) {
             this.solved = true;
-            return;
-        }
-
-        if (this.count == this.capacity) {
+        } else if (this.count > 0 && this.count <= this.capacity) {
             let color = this.stack[0];
 
-            for (let i = 0; i < this.stack.lenght; i++) {
+            for (let i = 0; i < this.stack.length; i++) {
 
-                if (color === this.stack[i]) {
+                if (color == this.stack[i]) {
 
                 } else {
+
                     this.solved = false;
 
+                    return;
                 }
             }
+
             this.solved = true;
+
 
 
         } else {
-
             this.solved = false;
-
         }
 
     }

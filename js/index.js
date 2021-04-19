@@ -4,7 +4,7 @@
 const bottleWidth = 50;
 const bottleHeight = 180;
 const bottleAjustment = bottleWidth / 2;
-const bottleLayoutPositionY = 320;
+const bottleLayoutPositionY = 340;
 
 // -------------------------------------
 // GLOBAL VARIABLES
@@ -209,7 +209,7 @@ function draw() {
 
                         let currentBall = preStack.pop();
                         fill(color(getColor(currentBall)));
-                        ellipse(x, 500 - (height * 20), 20, 20);
+                        ellipse(x, 520 - (height * 30), 30, 30);
                         height++;
                         postStack.push(currentBall);
                     }
@@ -234,7 +234,7 @@ function draw() {
                     while (counter < howMany) {
 
                         fill(color(getColor(fillColor)));
-                        ellipse(spacing * (game.takeout[2] + 1), 280 - (counter * 20), 20, 20);
+                        ellipse(spacing * (game.takeout[2] + 1), 300 - (counter * 30), 30, 30);
                         counter++;
                     }
                 }
@@ -309,7 +309,7 @@ function getColor(color) {
             break;
 
         case 'red':
-            colorToFill = '#ff0000';
+            colorToFill = '#FF6666';
             break;
 
         case 'pink':
@@ -320,6 +320,24 @@ function getColor(color) {
             break;
         case 'green':
             colorToFill = '#16E49A'
+            break;
+        case 'orange':
+            colorToFill = '#FFA230';
+            break;
+        case 'darkBlue':
+            colorToFill = '#0731C3';
+            break;
+        case 'darkGreen':
+            colorToFill = '#00802B';
+            break;
+        case 'grey':
+            colorToFill = '#5F5F5F';
+            break;
+        case 'brown':
+            colorToFill = '#673737';
+            break;
+        case 'white':
+            colorToFill = '#FFFFFF';
             break;
     }
 
@@ -412,7 +430,7 @@ function mousePressed() {
                     if ((mouseX > 975 && mouseX < 1200) && (mouseY > 578 && mouseY < 640)) {
                         screen = 5;
                         //Comienzo juego
-                        startGame(1);
+                        startGame(3);
                     }
                     break;
             }
@@ -508,9 +526,6 @@ function mousePressed() {
                                             }
 
                                             gameData.push(data)
-                                            console.log("Terminado");
-                                            console.log(data);
-
 
                                             if (currentLevel == 1) {
                                                 screen = 6;
@@ -519,7 +534,7 @@ function mousePressed() {
 
                                                     screen = 5;
                                                     currentLevel = 2;
-                                                    startGame(3);
+                                                    startGame(4);
 
                                                 }, 3000);
                                             } else if (currentLevel == 2) {
