@@ -151,4 +151,9 @@ class Game {
         return true;
     }
 
+    score = (level) => {
+
+
+    }
+
 }

@@ -18,9 +18,13 @@ let game;
 let takeout;
 let drawTakeOut;
 let backgroundColor;
-let data = {};
+let gameData = [];
 let currentLevel;
 let playing;
+let correct = false;
+let incorrect = false;
+let boongaloFont;
+let gif;
 
 
 //-----------Will
@@ -58,6 +62,11 @@ let final3;
 
 function preload() {
     dakiti = loadSound("sound/dakiti.mp3");
+    boongaloFont = loadFont('font/b.otf');
+    gif = createImg("images/gif.gif");
+
+
+
 }
 
 function startGame(level) {
@@ -73,8 +82,10 @@ function startGame(level) {
 }
 
 
+
 function setup() {
 
+    textFont(boongaloFont);
     createCanvas(1280, 720);
     screen = 0;
     uitour = 0;
@@ -117,6 +128,7 @@ function draw() {
     switch (screen) {
         case 0:
             image(menuBg, 0, 0);
+            gif.position(-1000, -1000);
             if (soundBtn == true) {
                 image(musicOn, 0, 0);
             }
@@ -130,8 +142,10 @@ function draw() {
             break;
         case 3:
             image(inst3Bg, 0, 0);
+            gif.position(770, 180);
             break;
         case 4:
+            gif.position(-1000, -1000);
             switch (uitour) {
                 case 0:
                     image(inst4, 0, 0);
@@ -226,12 +240,9 @@ function draw() {
 
                 //Draw time
                 fill(255, 255, 255)
-                textSize(36);
-                text(game.getTime(), 138, 120);
-                text(game.movements, 380, 120);
-                //text(game.errors, 140, 180);
-                //text(currentLevel, 140, 50);
-
+                textSize(32);
+                text(game.getTime(), 142, 117);
+                text(game.movements, 384, 117);
 
                 if (game.finished) {
                     background('');
@@ -264,6 +275,14 @@ function draw() {
             }
 
             break;
+    }
+
+    if (correct) {
+        image(goodmov, 0, 0);
+    }
+
+    if (incorrect) {
+        image(badmov, 0, 0);
     }
 
 
@@ -468,12 +487,25 @@ function mousePressed() {
 
                                             playing = false;
 
+                                            let dataLevel = game.currentLevel;
+                                            let dataMovements = game.movements + 1;
+                                            let dataErrors = game.errors;
+                                            let dataTime = game.getTime();
+                                            let dataTimeInt = game.currentTime;
+
+
                                             let data = {
-                                                level: game.currentLevel,
-                                                movements: game.movements + 1,
-                                                errors: game.errors,
-                                                time: game.getTime()
+                                                level: dataLevel,
+                                                movements: dataMovements,
+                                                errors: dataErrors,
+                                                time: dataTime,
+                                                timeInt: dataTimeInt
                                             }
+
+                                            gameData.push(data)
+                                            console.log("Terminado");
+                                            console.log(data);
+
 
                                             if (currentLevel == 1) {
                                                 screen = 6;
@@ -505,10 +537,11 @@ function mousePressed() {
                                     }
 
                                     game.addMove();
-                                    image(goodmov, 0, 0);
-                                    setTimeout(function () {
-                                        backgroundColor = 'black';
-                                    }, 1000);
+
+                                    correct = true;
+                                    setTimeout(function() {
+                                        correct = false;
+                                    }, 250);
 
                                     return false;
 
@@ -520,10 +553,11 @@ function mousePressed() {
 
 
                             game.addError();
-                            image(badmov, 0, 0);
-                            setTimeout(function () {
-                                backgroundColor = 'black';
-                            }, 1000);
+                            incorrect = true;
+
+                            setTimeout(function() {
+                                incorrect = false;
+                            }, 250);
 
                             return false;
                         }
