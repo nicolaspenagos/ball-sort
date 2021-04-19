@@ -27,11 +27,15 @@ let playing;
 let screen;
 let uitour;
 let soundBtn;
+let finalScore;
 
 var dakiti;
 
 let menuBg;
 let musicOn;
+let mgameOn;
+let badmov;
+let goodmov;
 
 let inst1Bg;
 let inst2Bg;
@@ -41,6 +45,10 @@ let inst5;
 let inst6;
 let game1;
 let game2;
+let lvlComp;
+let final1;
+let final2;
+let final3;
 //-----------Will
 
 
@@ -70,6 +78,7 @@ function setup() {
     createCanvas(1280, 720);
     screen = 0;
     uitour = 0;
+    finalScore = 0;
     soundBtn = true;
     dakiti.play();
     dakiti.setVolume(0.05);
@@ -87,8 +96,16 @@ function setup() {
     inst6 = loadImage('images/menu-inst/inst6.png');
     game1 = loadImage('images/menu-inst/game1.png');
     game2 = loadImage('images/menu-inst/game2.png');
+    lvlComp = loadImage('images/menu-inst/lvlcomplete.png');
+    final1 = loadImage('images/menu-inst/final1.png');
+    final2 = loadImage('images/menu-inst/final2.png');
+    final3 = loadImage('images/menu-inst/final3.png');
 
     musicOn = loadImage('images/ui/musicon.png');
+    mgameOn = loadImage('images/ui/mgameon.png');
+    badmov = loadImage('images/ui/bad.png');
+    goodmov = loadImage('images/ui/good.png');
+
     //----------Will
 
     frameRate(30);
@@ -130,9 +147,13 @@ function draw() {
             }
             break;
         case 5:
-
             if (playing) {
-                background(backgroundColor);
+                if (currentLevel == 1) {
+                    image(game1, 0, 0);
+                } else if (currentLevel == 2) {
+                    image(game2, 0, 0);
+                }
+
                 fill(255, 255, 255);
                 // Draw the game.
                 gameToDraw = game.currentGame;
@@ -206,10 +227,10 @@ function draw() {
                 //Draw time
                 fill(255, 255, 255)
                 textSize(36);
-                text(game.getTime(), 140, 100);
-                text(game.movements, 140, 150);
-                text(game.errors, 140, 180);
-                text(currentLevel, 140, 50);
+                text(game.getTime(), 138, 120);
+                text(game.movements, 380, 120);
+                //text(game.errors, 140, 180);
+                //text(currentLevel, 140, 50);
 
 
                 if (game.finished) {
@@ -218,20 +239,30 @@ function draw() {
 
             }
 
+            //Sound Btn Feedback
+            if (soundBtn == true) {
+                image(mgameOn, 0, 0);
+            }
+
             break;
 
         case 6:
-            background('black');
-            fill(255, 255, 255)
-            textSize(36);
-            text('Level 2', 140, 100);
+            image(lvlComp, 0, 0);
             break;
 
         case 7:
-            background('black');
-            fill(255, 255, 255)
-            textSize(36);
-            text('Puntaje', 140, 100);
+            switch (finalScore) {
+                case 0:
+                    image(final1, 0, 0);
+                    break;
+                case 1:
+                    image(final2, 0, 0);
+                    break;
+                case 2:
+                    image(final3, 0, 0);
+                    break;
+            }
+
             break;
     }
 
@@ -364,6 +395,25 @@ function mousePressed() {
             break;
 
         case 5:
+
+            //Music Btn 
+
+            if ((mouseX > 1122 && mouseX < 1200) && (mouseY > 77 && mouseY < 140)) {
+                soundBtn = !soundBtn;
+                if (soundBtn == true) {
+                    dakiti.play();
+                } else if (soundBtn == false) {
+                    dakiti.stop();
+                }
+            }
+
+            //Restart Btn 
+
+            if ((mouseX > 1023 && mouseX < 1101) && (mouseY > 77 && mouseY < 140)) {
+
+            }
+
+
             //Calculate bottles area.
 
             let counter = 1;
@@ -455,10 +505,10 @@ function mousePressed() {
                                     }
 
                                     game.addMove();
-                                    backgroundColor = 'green';
-                                    setTimeout(function() {
+                                    image(goodmov, 0, 0);
+                                    setTimeout(function () {
                                         backgroundColor = 'black';
-                                    }, 100);
+                                    }, 1000);
 
                                     return false;
 
@@ -470,10 +520,10 @@ function mousePressed() {
 
 
                             game.addError();
-                            backgroundColor = 'red';
-                            setTimeout(function() {
+                            image(badmov, 0, 0);
+                            setTimeout(function () {
                                 backgroundColor = 'black';
-                            }, 100);
+                            }, 1000);
 
                             return false;
                         }
@@ -508,6 +558,7 @@ function mousePressed() {
 
                 drawTakeOut = false;
             }
+
 
             return false;
 
