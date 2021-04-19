@@ -241,8 +241,8 @@ function draw() {
                 //Draw time
                 fill(255, 255, 255)
                 textSize(32);
-                text(game.getTime(), 142, 117);
-                text(game.movements, 384, 117);
+                text(game.getTime(), 144, 115);
+                text(game.movements, 386, 115);
 
                 if (game.finished) {
                     background('');
