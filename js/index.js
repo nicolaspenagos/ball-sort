@@ -496,8 +496,12 @@ function mousePressed() {
                         } else {
 
                             let bottleStack = game.currentGame[counter - 1];
-                            if ((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) {
-                                if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0]) {
+
+
+                            let temp = counter;
+
+                            if (((bottleStack.size() + game.takeout[1]) <= bottleStack.capacity || bottleStack.size() == 0) || counter - 1 == game.takeout[2]) {
+                                if (bottleStack.peek() === 'empty' || bottleStack.peek() === game.takeout[0] || counter - 1 == game.takeout[2]) {
 
 
 
@@ -555,6 +559,11 @@ function mousePressed() {
                                     for (let i = 0; i < game.currentBottlesState.length; i++) {
                                         game.currentBottlesState[i] = false;
                                     }
+
+                                    if (temp - 1 == game.takeout[2]) {
+                                        return;
+                                    }
+
 
                                     game.addMove();
 

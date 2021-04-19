@@ -2,8 +2,6 @@ class Game {
 
     constructor(level) {
 
-
-        this.a = 0;
         this.levelOneA = [
             [4],
             ['blue', 'red', 'yellow', 'blue'],
