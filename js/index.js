@@ -108,9 +108,11 @@ function setup() {
     game1 = loadImage('images/menu-inst/game1.png');
     game2 = loadImage('images/menu-inst/game2.png');
     lvlComp = loadImage('images/menu-inst/lvlcomplete.png');
-    final1 = loadImage('images/menu-inst/final1.png');
-    final2 = loadImage('images/menu-inst/final2.png');
-    final3 = loadImage('images/menu-inst/final3.png');
+
+    final = loadImage('images/menu-inst/lastScreen.png');
+    final1 = loadImage('images/oro.png');
+    final2 = loadImage('images/plata.png');
+    final3 = loadImage('images/broncepng');
 
     musicOn = loadImage('images/ui/musicon.png');
     mgameOn = loadImage('images/ui/mgameon.png');
@@ -262,15 +264,18 @@ function draw() {
             break;
 
         case 7:
+
+            image(final, 0, 0);
             switch (finalScore) {
                 case 0:
-                    image(final1, 0, 0);
+
+                    image(final1, 550, 300);
                     break;
                 case 1:
-                    image(final2, 0, 0);
+                    mage(final2, 450, 300);
                     break;
                 case 2:
-                    image(final3, 0, 0);
+                    image(final3, 450, 300);
                     break;
             }
 
