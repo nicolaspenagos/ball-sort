@@ -91,9 +91,12 @@ function setup() {
     screen = 0;
     uitour = 0;
     finalScore = 0;
-    soundBtn = true;
-    dakiti.play();
-    dakiti.setVolume(0.05);
+    soundBtn = false;
+    setTimeout(() => {
+        //dakiti.play();
+        dakiti.setVolume(0.05);
+        console.log("aaaaaaaaaaa");
+    }, 500);
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
     currentLevel = 1;
@@ -642,7 +645,7 @@ function mousePressed() {
                                     game.addMove();
 
                                     correct = true;
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         correct = false;
                                     }, 250);
 
@@ -658,7 +661,7 @@ function mousePressed() {
                             game.addError();
                             incorrect = true;
 
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 incorrect = false;
                             }, 250);
 
