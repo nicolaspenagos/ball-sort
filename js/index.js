@@ -114,7 +114,7 @@ function setup() {
     final = loadImage('images/menu-inst/lastScreen.png');
     final1 = loadImage('images/oro.png');
     final2 = loadImage('images/plata.png');
-    final3 = loadImage('images/broncepng');
+    final3 = loadImage('images/bronce.png');
 
     musicOn = loadImage('images/ui/musicon.png');
     mgameOn = loadImage('images/ui/mgameon.png');
