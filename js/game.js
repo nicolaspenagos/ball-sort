@@ -151,7 +151,7 @@ class Game {
         for (let i = 0; i < this.currentGame.length; i++) {
             m += ' ' + this.currentGame[i].solved;
         }
-        console.log(this.a + ' ' + m);
+
 
         for (let i = 0; i < this.currentGame.length; i++) {
 
@@ -169,9 +169,62 @@ class Game {
 
 
 
-    score = (level) => {
+    score = (level, finished, errors, movements, timeInt) => {
+
+        let totalScore = 0;
+
+        console.log('level: ' + level);
+        console.log('finished: ' + finished);
+        console.log('errors: ' + errors);
+        console.log('movements: ' + movements);
+        console.log('segundos: ' + timeInt);
+
+        if (level == 1) {
+
+            if (finished) {
+                totalScore = totalScore + 30;
+            }
+
+            totalScore = totalScore - errors;
+
+            if (movements > 17)
+                movements = 17;
+            totalScore = totalScore + (2 * movements);
+
+
+            let t = 120 - timeInt;
+            if (t < 60) {
+                totalScore = totalScore + 16;
+            }
+
+            console.log('score: ' + totalScore);
+            return totalScore;
+
+        } else if (level == 2) {
+
+            if (finished) {
+                totalScore = totalScore + 24;
+            }
+
+            totalScore = totalScore - errors;
+            if (movements > 38)
+                movements = 38;
+            totalScore = totalScore + (2 * movements);
+
+            let t = 300 - timeInt;
+            if (t < 120) {
+                totalScore = totalScore + 20;
+            }
+
+            console.log('score: ' + totalScore);
+            return totalScore;
+
+
+        }
 
 
     }
+
+
 
 }

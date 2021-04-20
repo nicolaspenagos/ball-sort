@@ -40,6 +40,7 @@ let musicOn;
 let mgameOn;
 let badmov;
 let goodmov;
+let timeOut;
 
 let inst1Bg;
 let inst2Bg;
@@ -96,6 +97,7 @@ function setup() {
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
     currentLevel = 1;
+    timeOut = loadImage('images/menu-inst/timeOut.png');
 
     //----------Will
     menuBg = loadImage('images/menu-inst/menubg.png');
@@ -201,6 +203,7 @@ function draw() {
                     let postStack = new Stack();
                     let height = 1;
 
+
                     while (currentStack.size() > 0) {
                         preStack.push(currentStack.pop());
                     }
@@ -247,7 +250,54 @@ function draw() {
                 text(game.movements, 386, 115);
 
                 if (game.finished) {
-                    background('');
+
+                    let dataLevel = game.currentLevel;
+                    let dataMovements = game.movements + 1;
+                    let dataErrors = game.errors;
+                    let dataTime = game.getTime();
+                    let dataTimeInt = game.currentTime;
+                    let dataFinished = false;
+
+                    if (game.currentLevel == 3) {
+
+                        let data = {
+                            level: dataLevel,
+                            movements: dataMovements,
+                            errors: dataErrors,
+                            time: dataTime,
+                            timeInt: dataTimeInt,
+                            finished: dataFinished,
+                            score: game.score(1, false, game.errors, game.movements + 1, dataTimeInt)
+                        }
+
+                        console.log(data);
+                        gameData.push(data);
+
+
+
+                        screen = 8;
+                        setTimeout(() => {
+                            screen = 5;
+                            currentLevel = 2;
+                            startGame(4);
+                        }, 4000);
+                    } else if (game.currentLevel == 4) {
+
+                        let data = {
+                            level: dataLevel,
+                            movements: dataMovements,
+                            errors: dataErrors,
+                            time: dataTime,
+                            timeInt: dataTimeInt,
+                            finished: dataFinished,
+                            score: game.score(2, false, game.errors, game.movements + 1, dataTimeInt)
+                        }
+
+                        gameData.push(data);
+                        console.log(data);
+
+                        screen = 7;
+                    }
                 }
 
             }
@@ -266,6 +316,16 @@ function draw() {
         case 7:
 
             image(final, 0, 0);
+
+            let score = gameData[0].score + gameData[1].score;
+            finalScore = 2;
+            if (score > 100)
+                finalScore = 1;
+
+            if (score > 150)
+                finalScore = 0;
+
+
             switch (finalScore) {
                 case 0:
 
@@ -279,6 +339,10 @@ function draw() {
                     break;
             }
 
+            break;
+
+        case 8:
+            image(timeOut, 0, 0);
             break;
     }
 
@@ -452,7 +516,11 @@ function mousePressed() {
             //Restart Btn 
 
             if ((mouseX > 1023 && mouseX < 1101) && (mouseY > 77 && mouseY < 140)) {
-
+                if (game.currentLevel == 3) {
+                    startGame(3);
+                } else {
+                    startGame(4);
+                }
             }
 
 
@@ -519,6 +587,7 @@ function mousePressed() {
                                             let dataErrors = game.errors;
                                             let dataTime = game.getTime();
                                             let dataTimeInt = game.currentTime;
+                                            let dataFinished = true;
 
 
                                             let data = {
@@ -526,10 +595,13 @@ function mousePressed() {
                                                 movements: dataMovements,
                                                 errors: dataErrors,
                                                 time: dataTime,
-                                                timeInt: dataTimeInt
+                                                timeInt: dataTimeInt,
+                                                finished: dataFinished,
+                                                score: game.score(currentLevel, true, game.errors, game.movements + 1, dataTimeInt)
                                             }
 
-                                            gameData.push(data)
+                                            gameData.push(data);
+                                            console.log(data);
 
                                             if (currentLevel == 1) {
                                                 screen = 6;
