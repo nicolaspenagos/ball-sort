@@ -62,7 +62,7 @@ let final3;
 // -------------------------------------
 
 function preload() {
-    dakiti = loadSound("sound/dakiti.mp3");
+    dakiti = loadSound("sound/lofi.mp3");
     boongaloFont = loadFont('font/b.otf');
     gif = createImg("images/gif.gif");
 
