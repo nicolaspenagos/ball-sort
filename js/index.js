@@ -25,7 +25,7 @@ let correct = false;
 let incorrect = false;
 let boongaloFont;
 let gif;
-
+let score;
 
 //-----------Will
 let screen;
@@ -316,6 +316,8 @@ function draw() {
         case 7:
 
             image(final, 0, 0);
+
+            let score = gameData[0].score + gameData[1].score;
             console.log(score);
 
             finalScore = 2;
@@ -332,10 +334,10 @@ function draw() {
                     image(final1, 550, 300);
                     break;
                 case 1:
-                    image(final2, 450, 300);
+                    image(final2, 550, 300);
                     break;
                 case 2:
-                    image(final3, 450, 300);
+                    image(final3, 550, 300);
                     break;
             }
 
