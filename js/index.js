@@ -316,9 +316,8 @@ function draw() {
         case 7:
 
             image(final, 0, 0);
+            console.log(score);
 
-            console.log(gameData);
-            let score = gameData[0].score + gameData[1].score;
             finalScore = 2;
             if (score > 100)
                 finalScore = 1;
