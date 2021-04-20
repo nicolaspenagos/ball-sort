@@ -9,6 +9,7 @@ const bottleLayoutPositionY = 340;
 // -------------------------------------
 // GLOBAL VARIABLES
 // -------------------------------------
+let finalTotalScore;
 let bottle;
 let pressedBottle;
 let spacing;
@@ -56,7 +57,7 @@ let final2;
 let final3;
 //-----------Will
 
-
+let end = true;
 // -------------------------------------
 // FUNCTIONS
 // -------------------------------------
@@ -92,11 +93,8 @@ function setup() {
     uitour = 0;
     finalScore = 0;
     soundBtn = false;
-    setTimeout(() => {
-        //dakiti.play();
-        dakiti.setVolume(0.05);
-        console.log("aaaaaaaaaaa");
-    }, 500);
+    dakiti.setVolume(0.05);
+    dakiti.loop();
     bottle = loadImage('images/bottle.png');
     pressedBottle = loadImage('images/pressed_bottle.png');
     currentLevel = 1;
@@ -273,7 +271,7 @@ function draw() {
                             score: game.score(1, false, game.errors, game.movements, dataTimeInt)
                         }
 
-                        console.log(data);
+
                         gameData.push(data);
 
 
@@ -297,7 +295,7 @@ function draw() {
                         }
 
                         gameData.push(data);
-                        console.log(data);
+
 
                         screen = 7;
                     }
@@ -320,8 +318,15 @@ function draw() {
 
             image(final, 0, 0);
 
-            let score = gameData[0].score + gameData[1].score;
-            console.log(score);
+            finalTotalScore = gameData[0].score + gameData[1].score;
+
+            if (end) {
+                console.log('****************************');
+                console.log('Final Score: ' + finalTotalScore);
+                console.log('****************************');
+                end = false;
+
+            }
 
             finalScore = 2;
             if (score > 100)
@@ -606,7 +611,7 @@ function mousePressed() {
                                             }
 
                                             gameData.push(data);
-                                            console.log(data);
+
 
                                             if (currentLevel == 1) {
                                                 screen = 6;
@@ -645,7 +650,7 @@ function mousePressed() {
                                     game.addMove();
 
                                     correct = true;
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         correct = false;
                                     }, 250);
 
@@ -661,7 +666,7 @@ function mousePressed() {
                             game.addError();
                             incorrect = true;
 
-                            setTimeout(function () {
+                            setTimeout(function() {
                                 incorrect = false;
                             }, 250);
 

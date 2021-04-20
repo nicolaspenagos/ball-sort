@@ -173,12 +173,6 @@ class Game {
 
         let totalScore = 0;
 
-        console.log('level: ' + level);
-        console.log('finished: ' + finished);
-        console.log('errors: ' + errors);
-        console.log('movements: ' + movements);
-        console.log('segundos: ' + timeInt);
-
         if (level == 1) {
 
             if (finished) {
@@ -198,7 +192,6 @@ class Game {
                 totalScore = totalScore + 16;
             }
 
-            console.log('score: ' + totalScore);
             return totalScore;
 
         } else if (level == 2) {
@@ -217,7 +210,7 @@ class Game {
                 totalScore = totalScore + 20;
             }
 
-            console.log('score: ' + totalScore);
+
             return totalScore;
 
 
