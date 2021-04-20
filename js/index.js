@@ -267,7 +267,7 @@ function draw() {
                             time: dataTime,
                             timeInt: dataTimeInt,
                             finished: dataFinished,
-                            score: game.score(1, false, game.errors, game.movements + 1, dataTimeInt)
+                            score: game.score(1, false, game.errors, game.movements, dataTimeInt)
                         }
 
                         console.log(data);
@@ -290,7 +290,7 @@ function draw() {
                             time: dataTime,
                             timeInt: dataTimeInt,
                             finished: dataFinished,
-                            score: game.score(2, false, game.errors, game.movements + 1, dataTimeInt)
+                            score: game.score(2, false, game.errors, game.movements, dataTimeInt)
                         }
 
                         gameData.push(data);
@@ -317,6 +317,7 @@ function draw() {
 
             image(final, 0, 0);
 
+            console.log(gameData);
             let score = gameData[0].score + gameData[1].score;
             finalScore = 2;
             if (score > 100)
@@ -332,7 +333,7 @@ function draw() {
                     image(final1, 550, 300);
                     break;
                 case 1:
-                    mage(final2, 450, 300);
+                    image(final2, 450, 300);
                     break;
                 case 2:
                     image(final3, 450, 300);
@@ -597,7 +598,7 @@ function mousePressed() {
                                                 time: dataTime,
                                                 timeInt: dataTimeInt,
                                                 finished: dataFinished,
-                                                score: game.score(currentLevel, true, game.errors, game.movements + 1, dataTimeInt)
+                                                score: game.score(currentLevel, true, game.errors, game.movements, dataTimeInt)
                                             }
 
                                             gameData.push(data);

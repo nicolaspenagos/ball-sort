@@ -182,13 +182,14 @@ class Game {
         if (level == 1) {
 
             if (finished) {
-                totalScore = totalScore + 30;
+                totalScore = totalScore + 32;
             }
 
             totalScore = totalScore - errors;
 
-            if (movements > 17)
-                movements = 17;
+            if (movements > 16)
+                movements = 16;
+
             totalScore = totalScore + (2 * movements);
 
 
