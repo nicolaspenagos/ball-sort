@@ -4,7 +4,6 @@ The test consists of a simple game that has the objective of measuring the mathe
 
 The user will go through two levels which depending on the amount of movements, the amount of errors and the time will assign a final score from 0 to 200.
 
-![Recurso 1mdpi](https://user-images.githubusercontent.com/47872252/115504625-d8446d80-a23d-11eb-94b3-97f98eebf99d.png)
 ![Recurso 2mdpi](https://user-images.githubusercontent.com/47872252/115504627-d9759a80-a23d-11eb-88b9-9b030e49a524.png)
 
 
