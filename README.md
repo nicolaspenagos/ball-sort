@@ -2,7 +2,7 @@
 
 The test consists of a simple game that has the objective of measuring the mathematical logical ability of the users.
 
-The user will go through two levels which depending on the amount of movements, the amount of errors and the time will assign a final score from 0 to 200.
+The user will go through two levels which and depending on the amount of movements, the amount of errors and the time will assign a final score from 0 to 200.
 
 ![Recurso 3mdpi](https://user-images.githubusercontent.com/47872252/115505409-08d8d700-a23f-11eb-92b4-90c379137e78.png)
 
