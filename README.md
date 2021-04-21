@@ -8,7 +8,7 @@ The user will go through two levels which depending on the amount of movements, 
 
 ![Recurso 4mdpi](https://user-images.githubusercontent.com/47872252/115505413-0b3b3100-a23f-11eb-8955-da4cd0643d8d.png)
 
-![Recurso 2mdpi](https://user-images.githubusercontent.com/47872252/115504627-d9759a80-a23d-11eb-88b9-9b030e49a524.png)
+![Recurso 5mdpi](https://user-images.githubusercontent.com/47872252/115505607-53f2ea00-a23f-11eb-9796-bbb52c869440.png)
 
 
 
