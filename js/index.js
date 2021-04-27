@@ -329,10 +329,10 @@ function draw() {
             }
 
             finalScore = 2;
-            if (score > 100)
+            if (finalScore > 100)
                 finalScore = 1;
 
-            if (score > 150)
+            if (finalScore > 150)
                 finalScore = 0;
 
 
