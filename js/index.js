@@ -331,13 +331,13 @@ function draw() {
             finalScore = 2;
             if (finalTotalScore > 100) {
                 finalScore = 1;
-                console.log('hola');
+
             }
 
 
             if (finalTotalScore > 150) {
                 finalScore = 0;
-                console.log('hola1111');
+
             }
 
 
