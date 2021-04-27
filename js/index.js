@@ -329,11 +329,17 @@ function draw() {
             }
 
             finalScore = 2;
-            if (finalScore > 100)
+            if (finalTotalScore > 100) {
                 finalScore = 1;
+                console.log('hola');
+            }
 
-            if (finalScore > 150)
+
+            if (finalTotalScore > 150) {
                 finalScore = 0;
+                console.log('hola1111');
+            }
+
 
 
             switch (finalScore) {
