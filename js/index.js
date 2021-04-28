@@ -5,6 +5,7 @@ const bottleWidth = 50;
 const bottleHeight = 180;
 const bottleAjustment = bottleWidth / 2;
 const bottleLayoutPositionY = 340;
+let counter1level = 1;
 
 // -------------------------------------
 // GLOBAL VARIABLES
@@ -110,6 +111,7 @@ function setup() {
     screen = 0;
     uitour = 0;
     finalScore = 0;
+    finalTotalScore = -1;
     soundBtn = false;
     dakiti.setVolume(0.05);
     dakiti.loop();
@@ -293,14 +295,27 @@ function draw() {
 
                         gameData.push(data);
 
+                        if (currentLevel == 1) {
+                            finalTotalScore = 0;
+                            screen = 7;
+                        } else {
+
+                            screen = 8;
+                            setTimeout(() => {
+                                if (currentLevel == 1) {
+
+                                } else {
+                                    screen = 5;
+                                    currentLevel = 2;
+                                    startGame(4);
+                                }
+
+                            }, 4000);
+
+                        }
 
 
-                        screen = 8;
-                        setTimeout(() => {
-                            screen = 5;
-                            currentLevel = 2;
-                            startGame(4);
-                        }, 4000);
+
                     } else if (game.currentLevel == 4) {
 
                         let data = {
@@ -337,7 +352,9 @@ function draw() {
 
             image(final, 0, 0);
 
-            finalTotalScore = gameData[0].score + gameData[1].score;
+
+            if (finalTotalScore == -1)
+                finalTotalScore = gameData[0].score + gameData[1].score;
 
             if (end) {
                 console.log('****************************');
@@ -552,7 +569,12 @@ function mousePressed() {
 
             if ((mouseX > 1023 && mouseX < 1101) && (mouseY > 77 && mouseY < 140)) {
                 if (game.currentLevel == 3) {
-                    reStartGame(3);
+
+                    if (counter1level < 2) {
+                        startGame(3);
+                        counter1level++;
+                        finalTotalScore = 0;
+                    }
                 } else {
                     reStartGame(4);
                 }
@@ -648,6 +670,7 @@ function mousePressed() {
                                                     startGame(4);
 
                                                 }, 3000);
+
                                             } else if (currentLevel == 2) {
                                                 screen = 7;
                                             }
