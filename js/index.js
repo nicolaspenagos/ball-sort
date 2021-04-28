@@ -28,12 +28,15 @@ let incorrect = false;
 let boongaloFont;
 let gif;
 let score;
+let pen = 0;
+let pressed = false;
 
 //-----------Will
 let screen;
 let uitour;
 let soundBtn;
 let finalScore;
+let gamePressed;
 
 var dakiti;
 
@@ -131,6 +134,7 @@ function setup() {
     game1 = loadImage('images/menu-inst/game1.png');
     game2 = loadImage('images/menu-inst/game2.png');
     lvlComp = loadImage('images/menu-inst/lvlcomplete.png');
+    gamePressed = loadImage('images/menu-inst/pressed.png');
 
     final = loadImage('images/menu-inst/lastScreen.png');
     final1 = loadImage('images/oro.png');
@@ -189,7 +193,13 @@ function draw() {
 
             if (playing) {
                 if (currentLevel == 1) {
-                    image(game1, 0, 0);
+
+                    if (pressed) {
+                        image(gamePressed, 0, 0);
+                    } else {
+                        image(game1, 0, 0);
+                    }
+
                 } else if (currentLevel == 2) {
                     image(game2, 0, 0);
                 }
@@ -296,8 +306,14 @@ function draw() {
                         gameData.push(data);
 
                         if (currentLevel == 1) {
-                            finalTotalScore = 0;
-                            screen = 7;
+
+                            if (game.getTimeInt() <= 0) {
+                                finalTotalScore = 0;
+                                screen = 7;
+                            }
+
+
+
                         } else {
 
                             screen = 8;
@@ -352,9 +368,11 @@ function draw() {
 
             image(final, 0, 0);
 
-
             if (finalTotalScore == -1)
                 finalTotalScore = gameData[0].score + gameData[1].score;
+
+            if (finalTotalScore > 200)
+                finalTotalScore = 200;
 
             if (end) {
                 console.log('****************************');
@@ -573,7 +591,7 @@ function mousePressed() {
                     if (counter1level < 2) {
                         startGame(3);
                         counter1level++;
-                        finalTotalScore = 0;
+                        pressed = true;
                     }
                 } else {
                     reStartGame(4);
