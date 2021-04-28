@@ -74,13 +74,31 @@ function preload() {
 function startGame(level) {
 
     game = new Game(level);
-    game.starTime();
+    game.starTime(0);
     gameToDraw = game.currentGame;
     columns = gameToDraw.length + 1;
     spacing = 1280 / columns;
     backgroundColor = 'black';
     drawTakeOut = false;
     playing = true;
+
+}
+
+
+function reStartGame(level) {
+
+    let currentTime = game.getTimeInt();
+    game = new Game(level);
+    game.starTime(currentTime);
+    gameToDraw = game.currentGame;
+    columns = gameToDraw.length + 1;
+    spacing = 1280 / columns;
+    backgroundColor = 'black';
+    drawTakeOut = false;
+    playing = true;
+
+
+
 }
 
 
@@ -166,6 +184,7 @@ function draw() {
             }
             break;
         case 5:
+
             if (playing) {
                 if (currentLevel == 1) {
                     image(game1, 0, 0);
@@ -533,9 +552,9 @@ function mousePressed() {
 
             if ((mouseX > 1023 && mouseX < 1101) && (mouseY > 77 && mouseY < 140)) {
                 if (game.currentLevel == 3) {
-                    startGame(3);
+                    reStartGame(3);
                 } else {
-                    startGame(4);
+                    reStartGame(4);
                 }
             }
 

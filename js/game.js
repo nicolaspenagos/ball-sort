@@ -99,13 +99,19 @@ class Game {
 
     }
 
-    starTime = () => {
+    starTime = (gameTime) => {
 
-        if (this.currentLevel == 3)
-            this.currentTime = 120;
-        else
-            this.currentTime = 300;
 
+        if (gameTime == 0) {
+            if (this.currentLevel == 3)
+                this.currentTime = 120;
+            else
+                this.currentTime = 360;
+        } else {
+
+            this.currentTime = gameTime;
+
+        }
 
         this.intervalId = setInterval(() => {
 
@@ -121,6 +127,7 @@ class Game {
 
     }
 
+
     getTime = () => {
 
         let min = Math.floor(this.currentTime / 60);
@@ -131,6 +138,10 @@ class Game {
 
         return "" + min + ":0" + seconds;
 
+    }
+
+    getTimeInt = () => {
+        return this.currentTime;
     }
 
     addMove = () => {
